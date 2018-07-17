@@ -1,4 +1,4 @@
-import { CHANGE_INPUT, ADD_TODO, DELETE_TODO } from './actionType'
+import { CHANGE_INPUT, ADD_TODO, DELETE_TODO, REMOTE_TODO } from './actionType'
 
 const defaultState = {
    inputValue: '',
@@ -22,5 +22,10 @@ export default (state=defaultState, action)=>{
       newState.list.splice(action.index, 1);
       return newState;
    }
-   return state      // 必须不要忘了返回去state
+   if(action.type === REMOTE_TODO){
+      let newState = JSON.parse(JSON.stringify(state));
+      newState.list = action.list;
+      return newState;
+   }
+   return state      // 默认返回去state
 }
